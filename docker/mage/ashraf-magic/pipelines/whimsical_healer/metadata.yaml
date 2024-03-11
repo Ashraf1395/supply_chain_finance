@@ -3,7 +3,7 @@ blocks:
   color: null
   configuration: {}
   downstream_blocks:
-  - export_data_togcs
+  - draconic_pond
   executor_config: null
   executor_type: local_python
   has_callback: false
@@ -22,15 +22,15 @@ blocks:
   executor_config: null
   executor_type: local_python
   has_callback: false
-  language: yaml
-  name: export_data_togcs
+  language: python
+  name: draconic pond
   retry_config: null
-  status: updated
+  status: not_executed
   timeout: null
-  type: data_exporter
+  type: transformer
   upstream_blocks:
   - consume_data
-  uuid: export_data_togcs
+  uuid: draconic_pond
 cache_block_output_in_memory: false
 callbacks: []
 concurrency_config: {}
