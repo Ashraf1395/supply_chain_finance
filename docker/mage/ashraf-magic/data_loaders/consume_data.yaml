@@ -1,0 +1,38 @@
+connector_type: kafka
+bootstrap_server: "localhost:9092"
+topic: supply_chain_data
+# topics: ['topic_name1', 'topic_name2']  # Optional. Used for specifying multiple topics.
+consumer_group: mage_consumer_group
+include_metadata: true
+api_version: "0.10.2"
+batch_size: 100
+timeout_ms: 500
+auto_offset_reset: latest # Optional
+max_partition_fetch_bytes: 1048576 # Optional
+offset:  # Optional
+#   value: null # Optional
+  type: "int"
+  partitions: # Optional
+  - {"topic": "supply_chain_data", "partition": 0}
+
+
+# Uncomment the config below to use SSL config
+# security_protocol: "SSL"
+# ssl_config:
+#   cafile: "CARoot.pem"
+#   certfile: "certificate.pem"
+#   keyfile: "key.pem"
+#   password: password
+#   check_hostname: true
+
+# Uncomment the config below to use SASL_SSL config
+# security_protocol: "SASL_SSL"
+# sasl_config:
+#   mechanism: "PLAIN"
+#   username: username
+#   password: password
+
+# Uncomment the config below to use protobuf schema to deserialize message
+# serde_config:
+#   serialization_method: PROTOBUF
+#   schema_classpath: "path.to.schema.SchemaClass"

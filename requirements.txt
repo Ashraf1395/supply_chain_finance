@@ -1,0 +1,2 @@
+pyspark
+confluent_kafka

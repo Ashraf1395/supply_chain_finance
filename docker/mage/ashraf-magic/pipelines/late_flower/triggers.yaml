@@ -1,0 +1,16 @@
+triggers:
+- envs: []
+  last_enabled_at: 2024-02-15 16:31:03.694022
+  name: ashraf-magic-trigger
+  pipeline_uuid: late_flower
+  schedule_interval: null
+  schedule_type: api
+  settings: null
+  sla: null
+  start_time: 2024-02-15 16:28:00
+  status: active
+  variables: {}
+
+
+
+#curl -X POST http://127.0.0.1:6789/api/pipeline_schedules/4/pipeline_runs/515ea1cd64dc4cea8ec0ab0226dcd356 

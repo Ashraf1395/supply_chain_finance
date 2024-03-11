@@ -1,0 +1,30 @@
+version: '3'
+networks:
+  default:
+    name: ${PROJECT_NAME}-network
+    external: true
+services:
+  postgres:
+    image: postgres:13
+    container_name: ${PROJECT_NAME}-postgres
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER} 
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD} 
+      - POSTGRES_DB=${POSTGRES_DBNAME}
+    volumes:
+      - "./postgres_data:/var/lib/postgressql/data:rw"
+    env_file:
+      - .env
+    ports:
+      - "${POSTGRES_PORT}:5432"
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: ${PROJECT_NAME}-pgadmin
+    environment:
+       - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
+       - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
+    env_file:
+      - .env
+    ports:
+       - "${PGADMIN_PORT}:80"

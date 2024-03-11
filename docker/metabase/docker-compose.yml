@@ -1,0 +1,13 @@
+version: '3'
+networks:
+  default:
+    name: ${PROJECT_NAME}-network
+    external: true
+services:
+  metabase:
+    image: metabase/metabase
+    container_name: ${PROJECT_NAME}-metabase
+    env_file:
+      - .env
+    ports:
+      - ${METABASE_PORT}:3000
