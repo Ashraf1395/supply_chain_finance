@@ -13,6 +13,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   && apt update \
   && apt install -y librdkafka-dev
 
-COPY . /home/stream
+COPY . /home/streaming_pipeline
+# COPY ../data /home/streaming_pipeline
 
-RUN pip3 install confluent_kafka
+RUN pip3 install confluent-kafka python-dateutil pyarrow pyspark
