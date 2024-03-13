@@ -1,6 +1,6 @@
 import pyspark.sql.types as T
 
-BOOTSTRAP_SERVERS = 'kafka:29092'
+BOOTSTRAP_SERVERS = 'localhost:9092'
 TOPIC = 'supply_chain_data'
 STREAM_SCHEMA = T.StructType([
     T.StructField("Type", T.StringType()),
