@@ -38,10 +38,11 @@ spark_config:
   # e.g., others: {'spark.executor.memory': '4g', 'spark.executor.cores': '2'}
   others: {}
   # Whether to create custom SparkSession via code and set in kwargs['context']
-  use_custom_session: false
+  use_custom_session: true
   # The variable name to set in kwargs['context'],
   # e.g. kwargs['context']['spark'] = spark_session
   custom_session_var_name: 'spark'
+  
 
 notification_config:
   alert_on:
