@@ -24,7 +24,7 @@ spark_config:
   app_name: 'my spark app'
   # Master URL to connect to
   # e.g., spark_master: 'spark://host:port', or spark_master: 'yarn'
-  spark_master: 'local'
+  spark_master: 'spark://spark_master:7077'
   # Executor environment variables
   # e.g., executor_env: {'PYTHONPATH': '/home/path'}
   executor_env: {}
