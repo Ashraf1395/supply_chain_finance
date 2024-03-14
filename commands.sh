@@ -29,6 +29,10 @@ start-spark() {
 # Function to start Mage
 start-mage() {
    docker-compose -f ./docker/mage/docker-compose.yml up -d
+   sleep 5
+   cp ./streaming_pipeline/kafka_to_gcs.yaml ./docker/mage/${PROJECT_NAME}/data_exporters/
+   cp ./streaming_pipeline/consume_from_kafka.yaml ./docker/mage/${PROJECT_NAME}/data_loaders/
+   cp ./streaming_pipeline/kafka_to_gcs_streaming ./docker/mage/${PROJECT_NAME}/pipelines/
 }
 
 # Function to start Postgres
@@ -70,6 +74,7 @@ stop-metabase() {
 start-streaming-pipeline(){
     # Start Kafka and Mage, then begin streaming data
     start-kafka
+    sleep 5
     start-mage
     stream-data
 }
