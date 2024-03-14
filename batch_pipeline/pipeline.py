@@ -10,7 +10,7 @@ credentials_location = './docker/mage/google-cred.json'
 conf = SparkConf() \
     .setMaster('local[*]') \
     .setAppName('test') \
-    .set("spark.jars", "./data/gcs-connector-hadoop3-2.2.5.jar") \
+    .set("spark.jars", "./jar_files/gcs-connector-hadoop3-2.2.5.jar") \
     .set("spark.hadoop.google.cloud.auth.service.account.enable", "true") \
     .set("spark.hadoop.google.cloud.auth.service.account.json.keyfile", credentials_location)\
     .set("spark.hadoop.google.cloud.project.id", "gothic-sylph-387906")
@@ -29,182 +29,83 @@ spark = SparkSession.builder \
     .config(conf=sc.getConf()) \
     .getOrCreate()
 
-gcs_bucket_path = "gs://supply-chain-data/"
 
-df_raw = spark.read.parquet(gcs_bucket_path + 'raw_streaming/*')
+def extract_columns(df, columns_to_extract):
+    extracted_cols = [col("data").getItem(col_name).alias(col_name) for col_name in columns_to_extract]
+    return df.select(*extracted_cols)
 
-df_raw.printSchema()
-# time_schema = StructType([
-#     StructField("email", StringType(), True),
-#     StructField("homework_m1", DoubleType(), True),
-#     StructField("lectures_m1", DoubleType(), True),
-#     StructField("homework_m2", DoubleType(), True),
-#     StructField("lectures_m2", DoubleType(), True),
-#     StructField("homework_m3", DoubleType(), True),
-#     StructField("lectures_m3", DoubleType(), True),
-#     StructField("homework_m4", DoubleType(), True),
-#     StructField("lectures_m4", DoubleType(), True),
-#     StructField("homework_m5", DoubleType(), True),
-#     StructField("lectures_m5", DoubleType(), True),
-#     StructField("homework_m6", DoubleType(), True),
-#     StructField("lectures_m6", DoubleType(), True),
-#     StructField("homework_w3", DoubleType(), True),
-#     StructField("p_eval_time", DoubleType(), True),
-#     StructField("p_sub_time", DoubleType(), True),
- 
-# ])
+def create_dimension_tables(df, extract_func, columns_to_extract, table_name):
+    dimension_df = extract_func(df, columns_to_extract)
+    # dimension_df.createOrReplaceTempView(table_name)
+    return dimension_df
 
-# df_time_spent = df_time_spent.fillna(0).select(
-#     col('email'),
-#     (col('time_homework')+col('time_homework_homework-01b')).alias('homework_m1'),
-#     (col('time_lectures')+col('time_lectures_homework-01b')).alias('lectures_m1'),
-#     col('time_homework_homework-02').alias('homework_m2'),
-#     col('time_lectures_homework-02').alias('lectures_m2'),
-#     col('time_homework_homework-03').alias('homework_m3'),
-#     col('time_lectures_homework-03').alias('lectures_m3'),
-#     col('time_homework_homework-04').alias('homework_m4'),
-#     col('time_lectures_homework-04').alias('lectures_m4'),
-#     col('time_homework_homework-05').alias('homework_m5'),
-#     col('time_lectures_homework-05').alias('lectures_m5'),
-#     col('time_homework_homework-06').alias('homework_m6'),
-#     col('time_lectures_homework-06').alias('lectures_m6'),
-#     col('time_homework_homework-piperider').alias('homework_w3'),
-#     (col('time_evaluate')+col('time_evaluate_project-02-eval')).alias('p_eval_time'),
-#     (col('time_project')+col('time_project_project-02-submissions')).alias('p_sub_time')
-# ).select([col(c).cast(time_schema[c].dataType) for c in time_schema.fieldNames()])
-
-# # df_time_spent.printSchema()
-
-# df_scores=df_scores.fillna(0).select(
-#     col('email'),
-#     (col('hw-01a')+col('hw-01b')).alias('hw_m1'),
-#     col('hw-02').alias('hw_m2'),
-#     col('hw-03').alias('hw_m3'),
-#     col('hw-04').alias('hw_m4'),
-#     col('hw-05').alias('hw_m5'),
-#     col('hw-06').alias('hw_m6'),
-#     col('hw-piperider').alias('hw_w3'),
-#     (col('project-01')+col('project-02')).alias('p')
-# )
-
-# # df_scores.printSchema()
+customer_columns = ["Customer Id", "Customer Email", "Customer Fname", "Customer Lname",
+                    "Customer Segment", "Customer City", "Customer Country",
+                    "Customer State", "Customer Street", "Customer Zipcode"]
 
 
-# # Create Scores Fact Table
-
-# fact_scores = df_scores.selectExpr("email", "stack(8, 'm1', hw_m1, 'm2', hw_m2, 'm3', hw_m3, 'm4', hw_m4, 'm5', hw_m5, 'm6', hw_m6, 'w3', hw_w3, 'p_sub', p) as (module_id, score)").\
-#                         filter(df_scores.email.isNotNull())
-
-# # fact_scores.show()
+# Create dimension tables
+customer_dimension = create_dimension_tables(df_raw, extract_columns, customer_columns, "customer_dimension")
+customer_dimension.show()
 
 
-# fact_time =df_time_spent.selectExpr(
-#     'email',
-#     "stack(9, 'm1', homework_m1 , lectures_m1,'m2', homework_m2 , lectures_m2,'m3', homework_m3 , lectures_m3,'m4', homework_m4 , lectures_m4,'m5', homework_m5 , lectures_m5,'m6', homework_m6 , lectures_m6,'w3',homework_w3,NULL,'p_eval',p_eval_time,NULL,'p_sub',p_sub_time,NULL) as (module_id,time_homework,time_lectures)"
-# )
+product_columns = ["Product Card Id", "Product Category Id", "Category Name", "Product Description",
+                   "Product Image", "Product Name", "Product Price", "Product Status"]
 
-# # Filter out null module names
-# fact_time = fact_time.filter(col("module_id").isNotNull())
-# # Show output DataFrame
-# # fact_time.show()
-
-# # Add user_id column and make it primary_key
-# df_user = df_time_spent.withColumn("user_id", monotonically_increasing_id()).\
-#                         withColumn("user_type", lit("student")).\
-#                         select('user_id','email','user_type')
-
-# # Add user_type column with default value 'student'
-# # df_user.show()
-
-# # Filter emails for instructor user type
-# instructor_emails = ["@Ankush_Khanna.com", "@Victoria_Perez_Mola.com", "@Alexey_Grigorev.com", "@Matt_Palmer.com", "@Luis_Oliveira.com", "@Michael_Shoemaker.com", "@Irem_Erturk.com", "@Adrian_Brudaru.com", "To_be_named" ,"@CL_Kao.com", "Self"]
-
-# # Extract email domains and create list of tuples with negative loop index as user_id
-# instructor_data = [(-i, email, "instructor") for i, email in enumerate(instructor_emails, start=1)]
-
-# # Create DataFrame for instructor emails
-# df_instructor_emails = spark.createDataFrame(instructor_data, ["user_id", "email", "user_type"])
-
-# # Union the instructor emails DataFrame with the original DataFrame
-# df_user = df_user.union(df_instructor_emails)
-
-# instructor_df = df_user.filter(df_user.user_type == "instructor")
-
-# # instructor_df.show()
-
-# # Define module names and IDs
-# module_names = ['Containerization and Infrastructure as Code','Workflow Orchestration','Data Ingestion', 'Data Warehouse','Analytics Engineering','Batch processing' ,'Streaming' ,'Stream Processing with SQL', 'Project_Evaluation' , 'Project_Submission', 'Piperider']
-# module_id = ['m1','m2','w1','m3','m4','m5','m6','w2','p_eval','p_sub','w3']
-
-# # Create DataFrame for modules
-# df_module = spark.createDataFrame(zip(module_id, module_names), schema=["module_id", "module_name"])
+product_dimension = create_dimension_tables(df_raw, extract_columns, product_columns, "product_dimension")
+product_dimension.show()
 
 
-# # Define the mapping of module IDs to instructor user IDs
-# module_instructor_mapping = {'m1': [-6, -5, -3],'m2': [-4],'w1': [-8],'m3': [-1],'m4': [-2],'m5': [-3],'m6': [-1, -7],'w2': [-9],'p_eval': [-11],'p_sub': [-11],'w3': [-10]}
 
-# # Create DataFrame for module names and IDs
-# df_module = spark.createDataFrame(zip(module_id, module_names), schema=["module_id", "module_name"])
+location_columns = ["Order Zipcode", "Order City", "Order State", "Order Region","Order Country",
+                    "Latitude", "Longitude"]
+location_dimension = create_dimension_tables(df_raw, extract_columns, location_columns, "location_dimension")
 
-# # Create DataFrame for module instructor mapping
-# module_instructor_df = spark.createDataFrame(module_instructor_mapping.items(), schema=["module_id", "instructor_ids"])
+location_dimension.show()
 
-# # Join df_module with module_instructor_df to add instructor_id column
-# df_module = df_module.join(module_instructor_df, on="module_id", how="left")
+order_columns = ["Order Id","Order date (DateOrders)", "Order Customer Id", "Order Item Id",
+                "Order Item Discount", "Order Item Discount Rate", "Order Item Product Price",
+                "Order Item Profit Ratio", "Order Item Quantity", "Sales per customer", "Sales",
+                "Order Item Total", "Order Profit Per Order", "Order Status"]
+
+order_dimension = create_dimension_tables(df, extract_columns, order_columns, "order_dimension")
+
+order_dimension.show()
+
+shipping_columns = ["Shipping date (DateOrders)", "Days for shipping (real)", "Days for shipment (scheduled)",
+                    "Shipping Mode","Delivery Status"]
+
+shipping_dimension = create_dimension_tables(df, extract_columns, shipping_columns, "shipping_dimension")
+
+shipping_dimension.show()
+
+department_columns = ["Department Id", "Department Name" ,"Market"]
+
+department_dimension = create_dimension_tables(df, extract_columns, department_columns, "department_dimension")
+
+department_dimension.show()
+
+fact_column = ["Type"]
+
+def extract_metadata(df, columns_to_extract):
+    extracted_cols = [col("metadata").getItem(col_name).alias(col_name) for col_name in columns_to_extract]
+    return df.select(*extracted_cols)
+
+metadata_columns = ["key","offset","partition","time","topic"]
+
+metadata_dimension = create_dimension_tables(df_raw, extract_metadata, metadata_columns, "metadata_dimension")
 
 
-# # Show the modified df_module DataFrame
-# # df_module.show()
+# Define the output file path
+output_path = gcs_bucket_path + "transformed_data/"
 
-# # Show dataframes
-# df_user.show()
-# df_module.show()
-# fact_scores.show()
-# fact_time.show()
+dataframes = ["customer_dimension" , "product_dimension" , "location_dimension"
+		    "order_dimension" , "shipping_dimension" ,"department_dimension" "metadata_dimension"]
 
-# # Define the output file path
-# output_path = gcs_bucket_path + "transformed_data/"
-
-# # Write df_module to GCS as an uncompressed CSV file
-# df_module.write.mode("overwrite").option("header", "true").option("compression", "none").csv(output_path + "df_module.csv")
-
-# # Write df_user to GCS as an uncompressed CSV file
-# df_user.write.mode("overwrite").option("header", "true").option("compression", "none").csv(output_path + "df_user.csv")
-
-# # Write fact_time to GCS as an uncompressed CSV file
-# fact_time.write.mode("overwrite").option("header", "true").option("compression", "none").csv(output_path + "fact_time.csv")
-
-# # Write fact_scores to GCS as an uncompressed CSV file
-# fact_scores.write.mode("overwrite").option("header", "true").option("compression", "none").csv(output_path + "fact_scores.csv")
+def write_to_gcs(dataframes,output_path):
+     for i in dataframes:
+	dataframes[i].mode("overwrite").option("header", "true").\
+	option("compression", "none").parquet(output_path + datafarmes[i] + ".parquet")
 
 
-# # Define the BigQuery table names where you want to write the data
-# bq_dataset_name = "gold"
-# bq_table_name_module = "df_module"
-# bq_table_name_user = "df_user"
-# bq_table_name_time = "fact_time"
-# bq_table_name_scores = "fact_scores"
-
-# # Write df_module to BigQuery
-# df_module.write.format("bigquery") \
-#     .option("table", f"{bq_dataset_name}.{bq_table_name_module}") \
-#     .option("temporaryGcsBucket", gcs_bucket_path)\
-#     .save(mode="overwrite")
-
-# # Write df_user to BigQuery
-# df_user.write.format("bigquery") \
-#     .option("table", f"{bq_dataset_name}.{bq_table_name_user}") \
-#     .option("temporaryGcsBucket", gcs_bucket_path)\
-#     .save(mode="overwrite")
-
-# # Write fact_time to BigQuery
-# fact_time.write.format("bigquery") \
-#     .option("table", f"{bq_dataset_name}.{bq_table_name_time}") \
-#     .option("temporaryGcsBucket", gcs_bucket_path)\
-#     .save(mode="overwrite")
-
-# # Write fact_scores to BigQuery
-# fact_scores.write.format("bigquery") \
-#     .option("table", f"{bq_dataset_name}.{bq_table_name_scores}") \
-#     .option("temporaryGcsBucket", gcs_bucket_path)\
-#     .save(mode="overwrite")
+write_to_gcs(dataframes,output_path)
