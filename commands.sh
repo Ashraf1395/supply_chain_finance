@@ -86,11 +86,3 @@ start-batch-pipeline(){
     # Execute the Python batch pipeline script
     python batch_pipeline/pipeline.py
 }
-
-
-#Committing to Github
-
-git() {
-    chmod +x ./git.sh
-    ./git.sh
-}
