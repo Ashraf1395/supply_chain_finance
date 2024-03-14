@@ -55,7 +55,6 @@ def produce_data(bootstrap_servers, topic, file_path):
     finally:
         producer.flush()
 
-    producer.close()
 
 if __name__ == '__main__':
     bootstrap_servers = BOOTSTRAP_SERVERS  # Change this to your Kafka broker's address

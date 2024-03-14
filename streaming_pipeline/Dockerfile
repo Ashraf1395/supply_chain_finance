@@ -16,4 +16,4 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY . /home/streaming_pipeline
 # COPY ../data /home/streaming_pipeline
 
-RUN pip3 install confluent-kafka python-dateutil pyarrow pyspark
+RUN pip3 install confluent-kafka pyarrow

@@ -15,3 +15,4 @@ In config.py the boostrap server will be the advertised kafka listener i.e kafka
 In the mage data_loader block for streaming pipeline
 the boostreap server will be kafka:29092
 
+First run kafka then mage then postgres then stream

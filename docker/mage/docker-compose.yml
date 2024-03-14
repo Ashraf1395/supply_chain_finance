@@ -4,14 +4,13 @@ networks:
     name: ${PROJECT_NAME}-network
     external: true
 services:
-  mageai:
+  mage:
     image: mageai/mageai:latest
-    container_name: ${PROJECT_NAME}-mageai
+    container_name: ${PROJECT_NAME}-mage
     command: mage start ${PROJECT_NAME}
     env_file:
       - .env
     environment:
-      USER_CODE_PATH: /home/src/${PROJECT_NAME}
       POSTGRES_DBNAME: ${POSTGRES_DBNAME}
       POSTGRES_SCHEMA: ${POSTGRES_SCHEMA}
       POSTGRES_USER: ${POSTGRES_USER}
@@ -22,7 +21,4 @@ services:
       - ${MAGE_PORT}:6789
     volumes:
       - .:/home/src/
-      
     restart: on-failure:5
-
-

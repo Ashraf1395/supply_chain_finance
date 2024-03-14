@@ -1,0 +1,16 @@
+version: '3.6'
+networks:
+  default:
+    name: ashraf-magic-network
+    external: true
+services:
+  stream:
+      build:
+        context: ../../streaming_pipeline
+      container_name: stream
+      command: python producer.py
+      working_dir: /home/streaming_pipeline
+      volumes:
+        - ./streaming_pipeline:/home/stream_pipeline
+      environment:
+        PYTHONUNBUFFERED: 1

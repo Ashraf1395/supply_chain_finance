@@ -37,17 +37,17 @@ default:
   DUCKDB_DATABASE: database
   DUCKDB_SCHEMA: main
   # Google
-  # GOOGLE_SERVICE_ACC_KEY:
-  #   type: service_account
-  #   project_id: project-id
-  #   private_key_id: key-id
-  #   private_key: "-----BEGIN PRIVATE KEY-----\nyour_private_key\n-----END_PRIVATE_KEY"
-  #   client_email: your_service_account_email
-  #   auth_uri: "https://accounts.google.com/o/oauth2/auth"
-  #   token_uri: "https://accounts.google.com/o/oauth2/token"
-  #   auth_provider_x509_cert_url: "https://www.googleapis.com/oauth2/v1/certs"
-  #   client_x509_cert_url: "https://www.googleapis.com/robot/v1/metadata/x509/your_service_account_email"
-  GOOGLE_SERVICE_ACC_KEY_FILEPATH: "google-cred.json"
+  GOOGLE_SERVICE_ACC_KEY:
+    type: service_account
+    project_id: project-id
+    private_key_id: key-id
+    private_key: "-----BEGIN PRIVATE KEY-----\nyour_private_key\n-----END_PRIVATE_KEY"
+    client_email: your_service_account_email
+    auth_uri: "https://accounts.google.com/o/oauth2/auth"
+    token_uri: "https://accounts.google.com/o/oauth2/token"
+    auth_provider_x509_cert_url: "https://www.googleapis.com/oauth2/v1/certs"
+    client_x509_cert_url: "https://www.googleapis.com/robot/v1/metadata/x509/your_service_account_email"
+  GOOGLE_SERVICE_ACC_KEY_FILEPATH: "/path/to/your/service/account/key.json"
   GOOGLE_LOCATION: US # Optional
   # MongoDB
   # Specify either the connection string or the (host, password, user, port) to connect to MongoDB.
@@ -81,11 +81,11 @@ default:
   PINOT_USER: user
   # PostgresSQL
   POSTGRES_CONNECT_TIMEOUT: 10
-  POSTGRES_DBNAME: de_zoomcamp_data
-  POSTGRES_SCHEMA: de_data # Optional
-  POSTGRES_USER: root
-  POSTGRES_PASSWORD: ashraf
-  POSTGRES_HOST: postgres
+  POSTGRES_DBNAME: postgres
+  POSTGRES_SCHEMA: public # Optional
+  POSTGRES_USER: username
+  POSTGRES_PASSWORD: password
+  POSTGRES_HOST: hostname
   POSTGRES_PORT: 5432
   # Qdrant
   QDRANT_COLLECTION: collection

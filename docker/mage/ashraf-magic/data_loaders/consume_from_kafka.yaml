@@ -1,0 +1,6 @@
+connector_type: kafka
+bootstrap_server: "kafka:29092"
+topic: supply_chain_data
+consumer_group: mage_consumer_group
+include_metadata: true
+api_version: 0.10.2
