@@ -1,5 +1,5 @@
 PROJECT_NAME='ashraf-magic'
-EXPORT_TO_GCS_PIPELINE_UUID='7b27e4d01771478e95213879393613c9'
+EXPORT_TO_BIGQUERY_PIPELINE_UUID='f0607c7c9c0241208bf779edfe0c5f9d'
 # Check if the network exists; if not, create it
 if ! docker network inspect ${PROJECT_NAME}-network &>/dev/null; then
     docker network create ${PROJECT_NAME}-network
@@ -23,16 +23,24 @@ start-spark() {
     chmod +x ./docker/spark/build.sh
     ./docker/spark/build.sh
 	# Start Spark containers
-	docker-compose -f ./docker/spark/docker-compose.yml up
+	docker-compose -f ./docker/spark/docker-compose.yml up -d
 }
 
 # Function to start Mage
 start-mage() {
    docker-compose -f ./docker/mage/docker-compose.yml up -d
    sleep 5
-   sudo cp ./streaming_pipeline/kafka_to_gcs.yaml ./docker/mage/${PROJECT_NAME}/data_exporters/
-   sudo cp ./streaming_pipeline/consume_from_kafka.yaml ./docker/mage/${PROJECT_NAME}/data_loaders/
-   sudo cp -r ./streaming_pipeline/kafka_to_gcs_streaming ./docker/mage/${PROJECT_NAME}/pipelines/
+   sudo cp ./streaming_pipeline/kafka_to_gcs_streaming/kafka_to_gcs.yaml ./docker/mage/${PROJECT_NAME}/data_exporters/
+   sudo cp ./streaming_pipeline/kafka_to_gcs_streaming/consume_from_kafka.yaml ./docker/mage/${PROJECT_NAME}/data_loaders/
+   sudo mkdir ./docker/mage/${PROJECT_NAME}/pipelines/kafka_to_gcs_streaming
+   sudo cp ./streaming_pipeline/kafka_to_gcs_streaming/metadata.yaml ./docker/mage/${PROJECT_NAME}/pipelines/kafka_to_gcs_streaming/
+   sudo touch ./docker/mage/${PROJECT_NAME}/pipelines/kafka_to_gcs_streaming/__init__.py
+
+   sudo cp ./batch_pipeline/export_to_big_query/data_exporters/* ./docker/mage/${PROJECT_NAME}/data_exporters/
+   sudo cp ./batch_pipeline/export_to_big_query/data_loaders/* ./docker/mage/${PROJECT_NAME}/data_loaders/
+   sudo mkdir ./docker/mage/${PROJECT_NAME}/pipelines/export_to_big_query
+   sudo cp ./batch_pipeline/export_to_big_query/*.yaml ./docker/mage/${PROJECT_NAME}/pipelines/export_to_big_query/
+   sudo touch ./docker/mage/${PROJECT_NAME}/pipelines/export_to_big_query/__init__.py
 }
 
 # Function to start Postgres
@@ -87,21 +95,23 @@ stop-streaming-pipeline(){
 }
 
 # Function to start the batch pipeline
-start-batch-pipeline(){
+spark-batch-pipeline(){
     # Execute the Python batch pipeline script
-    python batch_pipeline/pipeline.py
+    python batch_pipeline/export_to_gcs/pipeline.py
 }
 
-export_dim_to_gcs(){
-    curl -X POST http://127.0.0.1:6789/api/pipeline_schedules/1/pipeline_runs/${EXPORT_TO_GCS_PIPELINE_UUID} \
-    --header 'Content-Type: application/json' \
-    --data '
+gcs-to-bigquery-pipeline(){
+    curl -X POST http://127.0.0.1:6789/api/pipeline_schedules/2/pipeline_runs/${EXPORT_TO_BIGQUERY_PIPELINE_UUID} \
+  --header 'Content-Type: application/json' \
+  --data '
     {
     "pipeline_run": {
         "variables": {
-        "dim_customer": "customer_dimension"
+        "key1": "value1",
+        "key2": "value2"
         }
     }
     }'
+
 }
 

@@ -1,0 +1,8 @@
+connector_type: google_cloud_storage
+bucket: supply-chain-data
+prefix: raw_streaming
+file_type: parquet
+buffer_size_mb: 5
+buffer_timeout_seconds: 300
+path_to_credentials_json_file: ./google-cred.json
+date_partition_format: "%Y%m%dT%H"

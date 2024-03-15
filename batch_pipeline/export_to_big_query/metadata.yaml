@@ -1,0 +1,275 @@
+blocks:
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks:
+  - customer_dim_to_big_query
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: load_customer_dimension
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_loader
+  upstream_blocks: []
+  uuid: load_customer_dimension
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: customer_dim_to_big_query
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_exporter
+  upstream_blocks:
+  - load_customer_dimension
+  uuid: customer_dim_to_big_query
+- all_upstream_blocks_executed: true
+  color: null
+  configuration:
+    file_source:
+      path: data_loaders/load_department_dimension.py
+  downstream_blocks:
+  - department_dim_to_big_query
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: load_department_dimension
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_loader
+  upstream_blocks: []
+  uuid: load_department_dimension
+- all_upstream_blocks_executed: true
+  color: null
+  configuration:
+    file_source:
+      path: data_exporters/department_dim_to_big_query.py
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: department_dim_to_big_query
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_exporter
+  upstream_blocks:
+  - load_department_dimension
+  uuid: department_dim_to_big_query
+- all_upstream_blocks_executed: true
+  color: null
+  configuration:
+    file_source:
+      path: data_loaders/load_location_dimension.py
+  downstream_blocks:
+  - location_dim_to_big_query
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: load_location_dimension
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_loader
+  upstream_blocks: []
+  uuid: load_location_dimension
+- all_upstream_blocks_executed: true
+  color: null
+  configuration:
+    file_source:
+      path: data_exporters/location_dim_to_big_query.py
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: location_dim_to_big_query
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_exporter
+  upstream_blocks:
+  - load_location_dimension
+  uuid: location_dim_to_big_query
+- all_upstream_blocks_executed: true
+  color: null
+  configuration:
+    file_source:
+      path: data_exporters/metadata_dim_to_big_query.py
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: metadata_dim_to_big_query
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_exporter
+  upstream_blocks:
+  - load_metadata_dimensio
+  uuid: metadata_dim_to_big_query
+- all_upstream_blocks_executed: true
+  color: null
+  configuration:
+    file_source:
+      path: data_loaders/load_metadata_dimensio.py
+  downstream_blocks:
+  - metadata_dim_to_big_query
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: load_metadata_dimensio
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_loader
+  upstream_blocks: []
+  uuid: load_metadata_dimensio
+- all_upstream_blocks_executed: true
+  color: null
+  configuration:
+    file_source:
+      path: data_loaders/load_order_dimension.py
+  downstream_blocks:
+  - order_dim_to_big_query
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: load_order_dimension
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_loader
+  upstream_blocks: []
+  uuid: load_order_dimension
+- all_upstream_blocks_executed: true
+  color: null
+  configuration:
+    file_source:
+      path: data_exporters/order_dim_to_big_query.py
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: order_dim_to_big_query
+  retry_config: null
+  status: failed
+  timeout: null
+  type: data_exporter
+  upstream_blocks:
+  - load_order_dimension
+  uuid: order_dim_to_big_query
+- all_upstream_blocks_executed: true
+  color: null
+  configuration:
+    file_source:
+      path: data_loaders/load_product_dimension.py
+  downstream_blocks:
+  - product_dim_to_big_query
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: load_product_dimension
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_loader
+  upstream_blocks: []
+  uuid: load_product_dimension
+- all_upstream_blocks_executed: true
+  color: null
+  configuration:
+    file_source:
+      path: data_exporters/product_dim_to_big_query.py
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: product_dim_to_big_query
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_exporter
+  upstream_blocks:
+  - load_product_dimension
+  uuid: product_dim_to_big_query
+- all_upstream_blocks_executed: true
+  color: null
+  configuration:
+    file_source:
+      path: data_loaders/load_shipping_dimension.py
+  downstream_blocks:
+  - shipping_dim_to_big_query
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: load_shipping_dimension
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_loader
+  upstream_blocks: []
+  uuid: load_shipping_dimension
+- all_upstream_blocks_executed: true
+  color: null
+  configuration:
+    file_source:
+      path: data_exporters/shipping_dim_to_big_query.py
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: shipping_dim_to_big_query
+  retry_config: null
+  status: failed
+  timeout: null
+  type: data_exporter
+  upstream_blocks:
+  - load_shipping_dimension
+  uuid: shipping_dim_to_big_query
+cache_block_output_in_memory: false
+callbacks: []
+concurrency_config: {}
+conditionals: []
+created_at: '2024-03-14 10:14:17.029096+00:00'
+data_integration: null
+description: null
+executor_config: {}
+executor_count: 1
+executor_type: null
+extensions: {}
+name: export_to_big_query
+notification_config: {}
+remote_variables_dir: null
+retry_config: {}
+run_pipeline_in_one_process: false
+settings:
+  triggers: null
+spark_config: {}
+tags: []
+type: python
+uuid: export_to_big_query
+variables:
+  dim_customer: customer_dimension
+variables_dir: /home/src/mage_data/ashraf-magic
+widgets: []
