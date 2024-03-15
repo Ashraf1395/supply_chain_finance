@@ -50,31 +50,31 @@ def create_dimension_tables(df, extract_func, columns_to_extract, table_name):
 
 # Create dimension tables
 customer_dimension = create_dimension_tables(df_raw, extract_columns, customer_columns, "customer_dimension")
-customer_dimension.show()
+# customer_dimension.show()
 print('Created Dimension table for Customers')
 
 product_dimension = create_dimension_tables(df_raw, extract_columns, product_columns, "product_dimension")
-product_dimension.show()
+# product_dimension.show()
 print('Created Dimension table for Products')
 
 location_dimension = create_dimension_tables(df_raw, extract_columns, location_columns, "location_dimension")
-location_dimension.show()
+# location_dimension.show()
 print('Created Dimension table for Location')
 
 order_dimension = create_dimension_tables(df_raw, extract_columns, order_columns, "order_dimension").\
                     withColumnRenamed('Order date (DateOrders)','Order date')
-order_dimension.show()
+# order_dimension.show()
 print('Created Dimension table for Orders')
 
 shipping_dimension = create_dimension_tables(df_raw, extract_columns, shipping_columns, "shipping_dimension").\
                         withColumnRenamed('Shipping date (DateOrders)','Shipping date').\
                         withColumnRenamed('Days for shipping (real)','Days for shipping real').\
-                        withColumnRenamed('Days for shipping scheduled','Days for shipping scheduled')                     
+                        withColumnRenamed('Days for shipment (scheduled)','Days for shipping scheduled')                     
 shipping_dimension.show()
 print('Created Dimension table for Shipping')
 
 department_dimension = create_dimension_tables(df_raw, extract_columns, department_columns, "department_dimension")
-department_dimension.show()
+# department_dimension.show()
 print('Created Dimension table for Departments')
 
 # Function to extract metadata columns
@@ -84,6 +84,7 @@ def extract_metadata(df, columns_to_extract):
 
 # Create metadata dimension table
 metadata_dimension = create_dimension_tables(df_raw, extract_metadata, metadata_columns, "metadata_dimension")
+# metadata_dimension.show()
 print('Created Dimension table for Metadata')
 
 # Dictionary to hold all dimension tables
@@ -102,7 +103,7 @@ def write_to_gcs(dataframes, output_path):
     print('Starting to Export Raw Streaming data to GCS...')
     for name, dataframe in dataframes.items():
         dataframe.write.mode("overwrite").option("header", "true").option("compression", "none").parquet(output_path + name + ".parquet")
-        print(f"Exported Dataframe {name} to GCS File Path {output_path}")
+        print(f"Exported Dataframe {name} to GCS.")
 
 # Write dimension tables to GCS
 write_to_gcs(dataframes, output_path)

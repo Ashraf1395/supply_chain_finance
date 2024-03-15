@@ -94,8 +94,7 @@ stop-streaming-pipeline(){
     stop-mage
 }
 
-# Function to start the batch pipeline
-spark-batch-pipeline(){
+olap-transformation-pipeline(){
     # Execute the Python batch pipeline script
     python batch_pipeline/export_to_gcs/pipeline.py
 }
@@ -114,6 +113,10 @@ gcs-to-bigquery-pipeline(){
     }'
 }
 
+start-batch-pipeline(){
+    olap-transformation-pipeline
+    gcs-to-bigquery-pipeline
+}
 gitting(){
     git add .
     sleep 2
