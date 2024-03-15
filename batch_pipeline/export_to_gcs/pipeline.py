@@ -67,7 +67,9 @@ order_dimension.show()
 print('Created Dimension table for Orders')
 
 shipping_dimension = create_dimension_tables(df_raw, extract_columns, shipping_columns, "shipping_dimension").\
-                        withColumnRenamed('Shipping date (DateOrders)','Shipping date')
+                        withColumnRenamed('Shipping date (DateOrders)','Shipping date').\
+                        withColumnRenamed('Days for shipping (real)','Days for shipping real').\
+                        withColumnRenamed('Days for shipping scheduled','Days for shipping scheduled')                     
 shipping_dimension.show()
 print('Created Dimension table for Shipping')
 
