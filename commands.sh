@@ -1,5 +1,5 @@
 PROJECT_NAME='ashraf-magic'
-
+EXPORT_TO_GCS_PIPELINE_UUID='7b27e4d01771478e95213879393613c9'
 # Check if the network exists; if not, create it
 if ! docker network inspect ${PROJECT_NAME}-network &>/dev/null; then
     docker network create ${PROJECT_NAME}-network
@@ -30,9 +30,9 @@ start-spark() {
 start-mage() {
    docker-compose -f ./docker/mage/docker-compose.yml up -d
    sleep 5
-   cp ./streaming_pipeline/kafka_to_gcs.yaml ./docker/mage/${PROJECT_NAME}/data_exporters/
-   cp ./streaming_pipeline/consume_from_kafka.yaml ./docker/mage/${PROJECT_NAME}/data_loaders/
-   cp ./streaming_pipeline/kafka_to_gcs_streaming ./docker/mage/${PROJECT_NAME}/pipelines/
+   sudo cp ./streaming_pipeline/kafka_to_gcs.yaml ./docker/mage/${PROJECT_NAME}/data_exporters/
+   sudo cp ./streaming_pipeline/consume_from_kafka.yaml ./docker/mage/${PROJECT_NAME}/data_loaders/
+   sudo cp -r ./streaming_pipeline/kafka_to_gcs_streaming ./docker/mage/${PROJECT_NAME}/pipelines/
 }
 
 # Function to start Postgres
@@ -91,3 +91,17 @@ start-batch-pipeline(){
     # Execute the Python batch pipeline script
     python batch_pipeline/pipeline.py
 }
+
+export_dim_to_gcs(){
+    curl -X POST http://127.0.0.1:6789/api/pipeline_schedules/1/pipeline_runs/${EXPORT_TO_GCS_PIPELINE_UUID} \
+    --header 'Content-Type: application/json' \
+    --data '
+    {
+    "pipeline_run": {
+        "variables": {
+        "dim_customer": "customer_dimension"
+        }
+    }
+    }'
+}
+
