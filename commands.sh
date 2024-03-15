@@ -112,6 +112,12 @@ gcs-to-bigquery-pipeline(){
         }
     }
     }'
+}
 
+git-update(){
+    git add .
+    sleep 2
+    git commit -m "Update from Local"
+    git push -u origin main
 }
 
