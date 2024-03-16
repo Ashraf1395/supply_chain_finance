@@ -2,7 +2,7 @@
 # Name your project! Project names should contain only lowercase characters
 # and underscores. A good package name should reflect your organization's
 # name or the intended use of these models
-name: 'my_new_project'
+name: 'supply_chain_project'
 version: '1.0.0'
 config-version: 2
 
@@ -12,12 +12,12 @@ profile: 'default'
 # These configurations specify where dbt should look for different types of files.
 # The `model-paths` config, for example, states that models in this project can be
 # found in the "models/" directory. You probably won't need to change these!
-model-paths: ["models"]
-analysis-paths: ["analyses"]
-test-paths: ["tests"]
-seed-paths: ["seeds"]
-macro-paths: ["macros"]
-snapshot-paths: ["snapshots"]
+model-paths: ["businesses_transformations/models"]
+analysis-paths: ["businesses_transformations/analyses"]
+test-paths: ["businesses_transformations/tests"]
+seed-paths: ["businesses_transformations/seeds"]
+macro-paths: ["businesses_transformations/macros"]
+snapshot-paths: ["businesses_transformations/snapshots"]
 
 target-path: "target"  # directory which will store compiled SQL files
 clean-targets:         # directories to be removed by `dbt clean`
@@ -36,7 +36,11 @@ clean-targets:         # directories to be removed by `dbt clean`
 # using the `{{ config(...) }}` macro.
 
 models:
-  my_new_project:
+  supply_chain_project:
     # Applies to all files under models/example/
     example:
+      +materialized: table
+    staging:
+      +materialized: view
+    core:
       +materialized: table
