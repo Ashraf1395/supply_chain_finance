@@ -43,4 +43,4 @@ select total_inventory_value.month,
        inventory_aging.inventory_value
 from total_inventory_value
 cross join inventory_turnover
-cross join inventory_aging;
+cross join inventory_aging
