@@ -11,7 +11,7 @@ select
     {{ dbt.safe_cast("Order_Item_Id", api.Column.translate_type("string")) }} as order_item_id,
     
     -- attributes
-    {{ dbt.safe_cast("Order_date", api.Column.translate_type("string")) }} as order_date,
+    {{ dbt.safe_cast("Order_date", api.Column.translate_type("timestamp")) }} as order_date,
     {{ dbt.safe_cast("Order_Item_Discount", api.Column.translate_type("string")) }} as order_item_discount,
     {{ dbt.safe_cast("Order_Item_Discount_Rate", api.Column.translate_type("string")) }} as order_item_discount_rate,
     {{ dbt.safe_cast("Order_Item_Product_Price", api.Column.translate_type("string")) }} as order_item_product_price,
