@@ -8,7 +8,7 @@
 with total_inventory_value as (
     select date_trunc('month', order_date) as month,
            sum(product_price * order_item_quantity) as total_inventory_value
-    from from {{ ref('dim_order') }}
+    from {{ ref('dim_order') }}
     group by month
 )
 
@@ -18,7 +18,7 @@ with total_inventory_value as (
     from (
         select sum(order_item_total) as sales,
                avg(order_item_quantity) as inventory
-        from dim_order
+        from {{ ref('dim_order') }}
         group by date_trunc('month', order_date)
     ) as turnover
 )
@@ -32,7 +32,7 @@ with total_inventory_value as (
                else 'Over 90 days'
            end as age_range,
            sum(product_price * order_item_quantity) as inventory_value
-    from dim_order
+    from {{ ref('dim_order') }}
     group by age_range
 )
 
