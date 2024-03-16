@@ -6,7 +6,7 @@
 
 -- Total inventory value over time
 with total_inventory_value as (
-    select date_trunc('month', order_date) as month,
+    select date_trunc('month', PARSE_DATETIME('%m/%d/%Y %H:%M', order_date))  as month,
            sum(product_price * order_item_quantity) as total_inventory_value
     from {{ ref('dim_order') }}
     group by month
