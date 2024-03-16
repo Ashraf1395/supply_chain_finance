@@ -26,6 +26,6 @@ SELECT
     category_name,
     total_committed_funds,
     completed_orders / total_orders AS commitment_fulfillment_rate
-FROM department_market_category;
+FROM department_market_category
 
 
