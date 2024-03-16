@@ -37,9 +37,6 @@ clean-targets:         # directories to be removed by `dbt clean`
 
 models:
   supply_chain_project:
-    # Applies to all files under models/example/
-    example:
-      +materialized: table
     staging:
       +materialized: view
     core:
