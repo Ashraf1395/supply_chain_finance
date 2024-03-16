@@ -67,5 +67,5 @@ JOIN
 JOIN 
     inventory_turnover ON total_inventory_value.month = inventory_turnover.month_num
 JOIN
-    inventory_aging ON total_inventory_value.month = EXTRACT(MONTH FROM DATE_TRUNC(PARSE_TIMESTAMP('%m/%d/%Y %H:%M', inventory_aging.order_date), MONTH));
+    inventory_aging ON total_inventory_value.month = EXTRACT(MONTH FROM DATE_TRUNC(PARSE_TIMESTAMP('%m/%d/%Y %H:%M', inventory_aging.order_date), MONTH))
 
