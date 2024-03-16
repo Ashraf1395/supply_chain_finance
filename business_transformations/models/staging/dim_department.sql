@@ -6,7 +6,7 @@
 
 select
     -- identifiers
-    {{ dbt.safe_cast("Department_Id", api.Column.translate_type("string")) }} as department_id,
+    {{ dbt.safe_cast("Department_Id", api.Column.translate_type("integer")) }} as department_id,
     
     -- attributes
     {{ dbt.safe_cast("Department_Name", api.Column.translate_type("string")) }} as department_name,
