@@ -18,7 +18,7 @@ department_market_category AS (
         oa.total_orders
     FROM order_aggregates oa
     JOIN (select department_id,department_name,market from {{ ref('dim_department') }}) d ON oa.department_id = d.department_id
-    JOIN (select product_card_id,category_name from {{ ref('dim_product') }} p ON oa.product_card_id = p.product_card_id
+    JOIN (select product_card_id,category_name from {{ ref('dim_product') }}) p ON oa.product_card_id = p.product_card_id
 )
 SELECT
     department_name,
