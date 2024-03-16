@@ -16,3 +16,6 @@ In the mage data_loader block for streaming pipeline
 the boostreap server will be kafka:29092
 
 First run kafka then mage then postgres then stream
+
+Setting directories of dbt like models,macros,analyses,tests inside a business_transformation folder so similary need to update the paths in the dbt_project.yaml for them.
+

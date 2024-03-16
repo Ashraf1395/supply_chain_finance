@@ -1,0 +1,15 @@
+version: 2
+
+sources:
+  - name: staging
+    database: gothic-sylph-387906
+    schema: supply_chain_data
+
+    tables:
+      - name: dim_customer
+      - name: dim_product
+      - name: dim_location
+      - name: dim_order
+      - name: dim_shipping
+      - name: dim_department
+      - name: dim_metadata
