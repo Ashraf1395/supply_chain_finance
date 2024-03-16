@@ -169,7 +169,7 @@ blocks:
   language: python
   name: order_dim_to_big_query
   retry_config: null
-  status: executed
+  status: failed
   timeout: null
   type: data_exporter
   upstream_blocks:
@@ -241,7 +241,7 @@ blocks:
   language: python
   name: shipping_dim_to_big_query
   retry_config: null
-  status: executed
+  status: failed
   timeout: null
   type: data_exporter
   upstream_blocks:

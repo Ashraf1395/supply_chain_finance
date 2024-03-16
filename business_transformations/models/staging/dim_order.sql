@@ -9,6 +9,8 @@ select
     {{ dbt.safe_cast("Order_Id", api.Column.translate_type("integer")) }} as order_id,
     {{ dbt.safe_cast("Order_Customer_Id", api.Column.translate_type("integer")) }} as order_customer_id,
     {{ dbt.safe_cast("Order_Item_Id", api.Column.translate_type("integer")) }} as order_item_id,
+    {{ dbt.safe_cast("Product_Card_Id", api.Column.translate_type("integer")) }} as product_card_id,
+    {{ dbt.safe_cast("Department_Id", api.Column.translate_type("integer")) }} as department_id,
     
     -- attributes
     {{ dbt.safe_cast("Order_date", api.Column.translate_type("string")) }} as order_date,
