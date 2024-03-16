@@ -1,4 +1,3 @@
-
 {{
     config(
         materialized='table'
@@ -9,4 +8,4 @@ select
     AVG(days_for_shipping_real - days_for_shipping_scheduled) AS avg_payment_delay,
     COUNT(1) AS count_of_orders
 FROM {{ ref('dim_shipping' )}}
-GROUP BY delivery_status;
+GROUP BY delivery_status
