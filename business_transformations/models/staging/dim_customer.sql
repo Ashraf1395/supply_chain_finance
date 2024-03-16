@@ -6,7 +6,7 @@
 
 select
     -- identifiers
-    {{ dbt.safe_cast(`Customer_Id`, api.Column.translate_type("integer")) }} as customer_id,
+    {{ dbt.safe_cast("Customer_Id", api.Column.translate_type("integer")) }} as customer_id,
     {{ dbt.safe_cast("Customer_Email", api.Column.translate_type("string")) }} as customer_email,
     {{ dbt.safe_cast("Customer_Fname", api.Column.translate_type("string")) }} as customer_fname,
     {{ dbt.safe_cast("Customer_Lname", api.Column.translate_type("string")) }} as customer_lname,
