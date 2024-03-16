@@ -1,0 +1,37 @@
+version: 2
+
+models:
+  - name: inventory_levels
+    description: >
+      Core table containing inventory data including total inventory value over time, inventory turnover ratio, and inventory aging analysis.
+
+    columns:
+      - name: month
+        description: The month for which the inventory metrics are calculated.
+        tests: {}
+        meta: {}
+        type: TIMESTAMP
+
+      - name: total_inventory_value
+        description: The total value of inventory for the corresponding month.
+        tests: {}
+        meta: {}
+        type: FLOAT64
+
+      - name: inventory_turnover_ratio
+        description: The ratio of inventory turnover calculated over the specified period.
+        tests: {}
+        meta: {}
+        type: FLOAT64
+
+      - name: age_range
+        description: The age range of inventory items categorized based on their age.
+        tests: {}
+        meta: {}
+        type: STRING
+
+      - name: inventory_value
+        description: The value of inventory items falling within the specified age range.
+        tests: {}
+        meta: {}
+        type: FLOAT64
