@@ -13,3 +13,5 @@ fraud_detection AS (
     GROUP BY order_customer_id
     ORDER BY avg_order_total DESC
 )
+
+select * from fraud_detection
