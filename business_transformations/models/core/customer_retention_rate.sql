@@ -1,3 +1,8 @@
+{{
+    config(
+        materialized='table'
+    )
+}}
 WITH month_names AS (
     SELECT 1 AS month_num, 'January' AS month_name UNION ALL
     SELECT 2, 'February' UNION ALL
