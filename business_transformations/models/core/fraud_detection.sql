@@ -4,7 +4,7 @@
     )
 }}
 
-fraud_detection AS (
+with fraud_detection AS (
     SELECT
         order_customer_id,
         AVG(order_item_total) AS avg_order_total,

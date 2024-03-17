@@ -23,7 +23,7 @@ total_inventory_value AS (
     SELECT 
             EXTRACT(YEAR FROM PARSE_TIMESTAMP('%m/%d/%Y %H:%M', order_date)) AS year,
             EXTRACT(MONTH FROM PARSE_TIMESTAMP('%m/%d/%Y %H:%M', order_date)) AS month,
-            SUM(order_item_product_price * order_item_quantity) AS total_inventory_value
+            ROUND(SUM(order_item_product_price * order_item_quantity),2) AS total_inventory_value
     FROM {{ ref('dim_order') }}
     GROUP BY year,month
 ),
@@ -32,7 +32,7 @@ inventory_turnover AS (
     SELECT
         EXTRACT(YEAR FROM PARSE_TIMESTAMP('%m/%d/%Y %H:%M', order_date)) AS year,
         EXTRACT(MONTH FROM PARSE_TIMESTAMP('%m/%d/%Y %H:%M', order_date)) AS month_num,
-        (SUM(sales) / AVG(inventory)) AS inventory_turnover_ratio
+        ROUND((SUM(sales) / AVG(inventory)),2) AS inventory_turnover_ratio
     FROM (
         SELECT 
             order_date,
@@ -52,7 +52,7 @@ inventory_aging AS (
            WHEN TIMESTAMP_DIFF('2018-01-01', PARSE_TIMESTAMP('%m/%d/%Y %H:%M', order_date), DAY) <= 90 THEN '61-90 days'
            ELSE 'Over 90 days'
        END AS age_range,
-       SUM(order_item_product_price * order_item_quantity) AS inventory_value
+       ROUND(SUM(order_item_product_price * order_item_quantity),2) AS inventory_value
     FROM {{ ref('dim_order') }}
     GROUP BY order_date, age_range
 )
