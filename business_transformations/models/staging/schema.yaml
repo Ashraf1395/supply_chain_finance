@@ -4,12 +4,294 @@ sources:
   - name: staging
     database: gothic-sylph-387906
     schema: supply_chain_data
-
     tables:
       - name: dim_customer
-      - name: dim_product
-      - name: dim_location
-      - name: dim_order
-      - name: dim_shipping
+        columns:
+          - name: customer_id
+            description: The identifier for the customer.
+            tests: []
+            meta: {}
+            type: INTEGER
+          - name: customer_email
+            description: The email address of the customer.
+            tests: []
+            meta: {}
+            type: STRING
+          - name: customer_fname
+            description: The first name of the customer.
+            tests: []
+            meta: {}
+            type: STRING
+          - name: customer_lname
+            description: The last name of the customer.
+            tests: []
+            meta: {}
+            type: STRING
+          - name: customer_segment
+            description: The segment to which the customer belongs.
+            tests: []
+            meta: {}
+            type: STRING
+          - name: customer_city
+            description: The city of the customer.
+            tests: []
+            meta: {}
+            type: STRING
+          - name: customer_country
+            description: The country of the customer.
+            tests: []
+            meta: {}
+            type: STRING
+          - name: customer_state
+            description: The state of the customer.
+            tests: []
+            meta: {}
+            type: STRING
+          - name: customer_street
+            description: The street address of the customer.
+            tests: []
+            meta: {}
+            type: STRING
+          - name: customer_zipcode
+            description: The zipcode of the customer.
+            tests: []
+            meta: {}
+            type: STRING
+
       - name: dim_department
+        columns:
+          - name: department_id
+            description: The identifier for the department.
+            tests: []
+            meta: {}
+            type: INTEGER
+          - name: department_name
+            description: The name of the department.
+            tests: []
+            meta: {}
+            type: STRING
+          - name: market
+            description: The market category of the department.
+            tests: []
+            meta: {}
+            type: STRING
+
+      - name: dim_location
+        columns:
+          - name: order_zipcode
+            description: The zipcode of the order location.
+            tests: []
+            meta: {}
+            type: STRING
+          - name: order_city
+            description: The city of the order location.
+            tests: []
+            meta: {}
+            type: STRING
+          - name: order_state
+            description: The state of the order location.
+            tests: []
+            meta: {}
+            type: STRING
+          - name: order_region
+            description: The region of the order location.
+            tests: []
+            meta: {}
+            type: STRING
+          - name: order_country
+            description: The country of the order location.
+            tests: []
+            meta: {}
+            type: STRING
+          - name: latitude
+            description: The latitude of the order location.
+            tests: []
+            meta: {}
+            type: FLOAT64
+          - name: longitude
+            description: The longitude of the order location.
+            tests: []
+            meta: {}
+            type: FLOAT64
+
       - name: dim_metadata
+        columns:
+          - name: metadata_key
+            description: The key of the metadata.
+            tests: []
+            meta: {}
+            type: STRING
+          - name: metadata_offset
+            description: The offset of the metadata.
+            tests: []
+            meta: {}
+            type: INTEGER
+          - name: metadata_partition
+            description: The partition of the metadata.
+            tests: []
+            meta: {}
+            type: INTEGER
+          - name: metadata_time
+            description: The time of the metadata.
+            tests: []
+            meta: {}
+            type: INTEGER
+          - name: metadata_topic
+            description: The topic of the metadata.
+            tests: []
+            meta: {}
+            type: STRING
+
+      - name: dim_order
+        columns:
+          - name: order_id
+            description: The identifier for the order.
+            tests: []
+            meta: {}
+            type: INTEGER
+          - name: order_customer_id
+            description: The identifier for the customer associated with the order.
+            tests: []
+            meta: {}
+            type: INTEGER
+          - name: order_item_id
+            description: The identifier for the order item.
+            tests: []
+            meta: {}
+            type: INTEGER
+          - name: product_card_id
+            description: The identifier for the product card.
+            tests: []
+            meta: {}
+            type: INTEGER
+          - name: department_id
+            description: The identifier for the department associated with the order.
+            tests: []
+            meta: {}
+            type: INTEGER
+          - name: order_date
+            description: The date of the order.
+            tests: []
+            meta: {}
+            type: STRING
+          - name: order_item_discount
+            description: The discount amount for the order item.
+            tests: []
+            meta: {}
+            type: FLOAT64
+          - name: order_item_discount_rate
+            description: The discount rate for the order item.
+            tests: []
+            meta: {}
+            type: FLOAT64
+          - name: order_item_product_price
+            description: The product price for the order item.
+            tests: []
+            meta: {}
+            type: FLOAT64
+          - name: order_item_profit_ratio
+            description: The profit ratio for the order item.
+            tests: []
+            meta: {}
+            type: FLOAT64
+          - name: order_item_quantity
+            description: The quantity of the order item.
+            tests: []
+            meta: {}
+            type: INTEGER
+          - name: sales_per_customer
+            description: The sales per customer.
+            tests: []
+            meta: {}
+            type: FLOAT64
+          - name: sales
+            description: The total sales for the order.
+            tests: []
+            meta: {}
+            type: FLOAT64
+          - name: order_item_total
+            description: The total amount for the order item.
+            tests: []
+            meta: {}
+            type: FLOAT64
+          - name: order_profit_per_order
+            description: The profit per order.
+            tests: []
+            meta: {}
+            type: FLOAT64
+          - name: order_status
+            description: The status of the order.
+            tests: []
+            meta: {}
+            type: STRING
+
+      - name: dim_product
+        columns:
+          - name: product_card_id
+            description: The identifier for the product card.
+            tests: []
+            meta: {}
+            type: INTEGER
+          - name: product_category_id
+            description: The identifier for the product category.
+            tests: []
+            meta: {}
+            type: INTEGER
+          - name: category_name
+            description: The name of the product category.
+            tests: []
+            meta: {}
+            type: STRING
+          - name: product_description
+            description: The description of the product.
+            tests: []
+            meta: {}
+            type: STRING
+          - name: product_image
+            description: The image of the product.
+            tests: []
+            meta: {}
+            type: STRING
+          - name: product_name
+            description: The name of the product.
+            tests: []
+            meta: {}
+            type: STRING
+          - name: product_price
+            description: The price of the product.
+            tests: []
+            meta: {}
+            type: FLOAT64
+          - name: product_status
+            description: The status of the product.
+            tests: []
+            meta: {}
+            type: STRING
+
+      - name: dim_shipping
+        columns:
+          - name: shipping_date
+            description: The date of shipping.
+            tests: []
+            meta: {}
+            type: STRING
+          - name: days_for_shipping_real
+            description: The actual days for shipping.
+            tests: []
+            meta: {}
+            type: INTEGER
+          - name: days_for_shipping_scheduled
+            description: The scheduled days for shipping.
+            tests: []
+            meta: {}
+            type: INTEGER
+          - name: shipping_mode
+            description: The mode of shipping.
+            tests: []
+            meta: {}
+            type: STRING
+          - name: delivery_status
+            description: The status of delivery.
+            tests: []
+            meta: {}
+            type: STRING
