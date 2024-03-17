@@ -19,7 +19,7 @@ profit_margin_analysis AS (
 operational_efficiency_metrics AS (
     SELECT AVG(days_for_shipment_real) AS avg_actual_shipment_days,
            AVG(days_for_shipment_scheduled) AS avg_scheduled_shipment_days
-    FROM {{ ref('dim_shopping') }}
+    FROM {{ ref('dim_shipping') }}
 )
 SELECT 
     os.month,
