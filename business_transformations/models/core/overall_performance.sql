@@ -19,15 +19,19 @@ WITH month_names AS (
     SELECT 12, 'December'
 ),
 overall_sales_performance AS (
-    SELECT EXTRACT(MONTH FROM DATE_TRUNC(PARSE_TIMESTAMP('%m/%d/%Y %H:%M', order_date), MONTH)) AS month,
-           ROUND(SUM(order_item_total),2) AS total_sales,
-           ROUND(SUM(order_profit_per_order),2) AS total_profit
+    SELECT 
+            EXTRACT(YEAR FROM PARSE_TIMESTAMP('%m/%d/%Y %H:%M', order_date)) AS year,
+            EXTRACT(MONTH FROM PARSE_TIMESTAMP('%m/%d/%Y %H:%M', order_date)) AS month,
+            ROUND(SUM(order_item_total),2) AS total_sales,
+            ROUND(SUM(order_profit_per_order),2) AS total_profit
     FROM {{ ref('dim_order') }}
     GROUP BY month
 ),
 profit_margin_analysis AS (
-    SELECT EXTRACT(MONTH FROM DATE_TRUNC(PARSE_TIMESTAMP('%m/%d/%Y %H:%M', order_date), MONTH)) AS month,
-           ROUND(AVG(order_profit_per_order),2) AS avg_profit_margin
+    SELECT 
+            EXTRACT(YEAR FROM PARSE_TIMESTAMP('%m/%d/%Y %H:%M', order_date)) AS year,
+            EXTRACT(MONTH FROM PARSE_TIMESTAMP('%m/%d/%Y %H:%M', order_date)) AS month,
+            ROUND(AVG(order_profit_per_order),2) AS avg_profit_margin
     FROM {{ ref('dim_order') }}
     GROUP BY month
 ),
@@ -36,7 +40,8 @@ operational_efficiency_metrics AS (
            ROUND(AVG(days_for_shipping_scheduled),2) AS avg_scheduled_shipment_days
     FROM {{ ref('dim_shipping') }}
 )
-SELECT 
+SELECT
+    os.year,
     m.month_name,
     os.total_sales,
     pma.avg_profit_margin,
@@ -50,4 +55,4 @@ JOIN
     month_names m on os.month=m.month_num
 CROSS JOIN 
     operational_efficiency_metrics oem
-order by m.month_num
+order by os.year,m.month_num

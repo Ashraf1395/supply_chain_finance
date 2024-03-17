@@ -20,15 +20,18 @@ WITH month_names AS (
 ),
 -- Total inventory value over time
 total_inventory_value AS (
-    SELECT EXTRACT(MONTH FROM DATE_TRUNC(PARSE_TIMESTAMP('%m/%d/%Y %H:%M', order_date), MONTH)) AS month,
-           SUM(order_item_product_price * order_item_quantity) AS total_inventory_value
+    SELECT 
+            EXTRACT(YEAR FROM PARSE_TIMESTAMP('%m/%d/%Y %H:%M', order_date)) AS year,
+            EXTRACT(MONTH FROM PARSE_TIMESTAMP('%m/%d/%Y %H:%M', order_date)) AS month,
+            SUM(order_item_product_price * order_item_quantity) AS total_inventory_value
     FROM {{ ref('dim_order') }}
-    GROUP BY month
+    GROUP BY year,month
 ),
 -- Inventory turnover ratio
 inventory_turnover AS (
-    SELECT 
-        EXTRACT(MONTH FROM DATE_TRUNC(PARSE_TIMESTAMP('%m/%d/%Y %H:%M', order_date), MONTH)) AS month_num,
+    SELECT
+        EXTRACT(YEAR FROM PARSE_TIMESTAMP('%m/%d/%Y %H:%M', order_date)) AS year,
+        EXTRACT(MONTH FROM PARSE_TIMESTAMP('%m/%d/%Y %H:%M', order_date)) AS month_num,
         (SUM(sales) / AVG(inventory)) AS inventory_turnover_ratio
     FROM (
         SELECT 
@@ -37,7 +40,7 @@ inventory_turnover AS (
             order_item_quantity AS inventory
         FROM {{ ref('dim_order') }}
     )
-    GROUP BY month_num
+    GROUP BY year,month_num
 ),
 -- Inventory aging analysis
 inventory_aging AS (
@@ -54,7 +57,8 @@ inventory_aging AS (
     GROUP BY order_date, age_range
 )
 
-SELECT 
+SELECT
+    inventory_turnover.year,
     month_names.month_name,
     total_inventory_value.total_inventory_value,
     inventory_turnover.inventory_turnover_ratio,
@@ -68,4 +72,4 @@ JOIN
     inventory_turnover ON total_inventory_value.month = inventory_turnover.month_num
 JOIN
     inventory_aging ON total_inventory_value.month = EXTRACT(MONTH FROM DATE_TRUNC(PARSE_TIMESTAMP('%m/%d/%Y %H:%M', inventory_aging.order_date), MONTH))
-
+order by inventory_turnover.year,inventory_turnover.month_num
