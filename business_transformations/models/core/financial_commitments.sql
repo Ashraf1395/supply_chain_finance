@@ -1,3 +1,8 @@
+{{
+    config(
+        materialized='table'
+    )
+}}
 WITH order_aggregates AS (
     SELECT
         o.department_id,
@@ -6,7 +11,7 @@ WITH order_aggregates AS (
         SUM(CASE WHEN o.order_status = 'COMPLETED' THEN 1 ELSE 0 END) AS completed_orders,
         COUNT(1) AS total_orders
     FROM (select department_id, product_card_id,order_item_total,order_status from {{ ref('dim_order') }}) o
-        GROUP BY o.department_id, o.product_card_id
+        GROUP BY o.department_id
 ),
 department_market_category AS (
     SELECT
