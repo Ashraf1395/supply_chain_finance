@@ -91,7 +91,7 @@ models:
         meta: {}
         type: FLOAT64
 
-  - name: fraud_detection_model
+  - name: fraud_detection
     description: >
       Model for detecting potential fraudulent activities.
     columns:
