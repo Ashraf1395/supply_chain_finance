@@ -23,5 +23,7 @@ Here's an example
 
 This is the Block level overview of the Pipeline.
 
+Data is produced from csv files and offline data stores and sent to the topic supply_chain_data
+in the message broker kafka and from kafka data is consumed by postgres database and gcs bucket where it is stored as raw_streaming data. 
 
 
