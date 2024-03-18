@@ -19,3 +19,7 @@ First run kafka then mage then postgres then stream
 
 Setting directories of dbt like models,macros,analyses,tests inside a business_transformation folder so similary need to update the paths in the dbt_project.yaml for them.
 
+
+While running any application if error shows Project_name variable not set even after running commands.sh
+Update the project_name varialble in the .env file of that application
+For example update the project_name variable in .env file of the metabase to run metabase if error comes.
