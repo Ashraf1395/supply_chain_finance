@@ -117,6 +117,9 @@ start-batch-pipeline(){
     olap-transformation-pipeline
     gcs-to-bigquery-pipeline
 }
+
+
+
 gitting(){
     git add .
     sleep 2

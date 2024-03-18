@@ -1,25 +1,38 @@
-For streaming_pipeline
+## Debugging Guide
 
-Dockerfile should be inside the streaming_pipeline and data folder as well
-The current repository in the dockerfile is the repository where the dockerfile is present
-for example here current directory for stream dockerfile is streaming_pipeline
+To ensure smooth execution of the streaming pipeline and associated components, follow these guidelines:
 
-For docker-compose.yaml file in the context path we have to specifiy where your dockerfile is present 
-and current directory for the docker-compose.yaml is also the reposoitory where it resides 
-for example here the current_directory for docker-compose.yaml file is docker/stream/
+## Dockerfile and Docker Compose Configuration
 
-And the path for dockerfile from docker-compose.yaml file is
-../../streaming_pipeline
+When setting up the Dockerfile and Docker Compose configuration for the streaming pipeline, follow these guidelines:
 
-In config.py the boostrap server will be the advertised kafka listener i.e kafka:29092
-In the mage data_loader block for streaming pipeline
-the boostreap server will be kafka:29092
+1. **Dockerfile Placement**
 
-First run kafka then mage then postgres then stream
+    - **Location:** Place the Dockerfile inside the `streaming_pipeline` folder.
+    - **Repository Context:** The current directory for the Dockerfile is the repository where it is present. For instance, in the streaming pipeline, the current directory for the Dockerfile is `streaming_pipeline`.
 
-Setting directories of dbt like models,macros,analyses,tests inside a business_transformation folder so similary need to update the paths in the dbt_project.yaml for them.
+2. **Docker Compose Configuration**
+
+    - **Context Path:** In the `docker-compose.yaml` file, specify the context path where the Dockerfile is located.
+    - **Current Directory:** The current directory for the `docker-compose.yaml` file is also the repository where it resides. For example, in the streaming pipeline, the current directory for the `docker-compose.yaml` file is `docker/stream/`.
+    - **Path to Dockerfile:** From the `docker-compose.yaml` file, specify the path to the Dockerfile as `../../streaming_pipeline`.
+
+3. **Kafka and Mage Configuration:**
+   - Update the `bootstrap_server` in the `config.py` and Mage's `data_loader` block to `kafka:29092`, which is the advertised Kafka listener.
+
+4. **Execution Order:**
+   - Ensure Kafka, Mage, PostgreSQL, and the stream are started in the correct sequence. First run Kafka, followed by Mage, then PostgreSQL, and finally the stream.
+
+5. **DBT Directory Configuration:**
+   - Set the directories for DBT (models, macros, analyses, tests) inside a `business_transformation` folder.
+   - Update the paths in the `dbt_project.yaml` accordingly.
+
+6. **Environment Variables:**
+   - If encountering the error "Project_name variable not set," update the `project_name` variable in the `.env` file of the respective application.
+   - For example, update the `project_name` variable in the `.env` file of Metabase to resolve any errors related to it.
+
+7. **Column Name Restrictions in DBT:**
+   - Avoid using `()` in column names in DBT. Replace any occurrences of `()` in column names, such as `days_of_shippment_real(Date Orders)` and `days_of_shippment_scheduled(Date Orders)`.
 
 
-While running any application if error shows Project_name variable not set even after running commands.sh
-Update the project_name varialble in the .env file of that application
-For example update the project_name variable in .env file of the metabase to run metabase if error comes.
+By following these debugging guidelines, you can ensure smooth execution of the streaming pipeline and associated components, mitigating any errors or issues encountered during the process.
