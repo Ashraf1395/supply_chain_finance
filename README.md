@@ -95,7 +95,7 @@ This tech stack offers a robust foundation for building and deploying data proce
 
 ### 4. Dockerized Services
 
-- **Folder**: [Streaming Pipeline](./docker/)
+- **Folder**: [Docker Containers](./docker/)
 - **Kafka**: Apache Kafka services including broker, REST proxy, Control Center, ZooKeeper, and Schema Registry.
 - **Mage**: Services facilitating the execution of data pipelines.
 - **PostgreSQL**: Database services for storing structured data.
