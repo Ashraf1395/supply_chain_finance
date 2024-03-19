@@ -17,7 +17,7 @@ The project aims to address challenges faced by traditional supply chain finance
 
 # Project Architecture Overview
 
-![Architecture](./images/Complete_architecture.png)
+![Architecture](./images/architecture_image.png)
 
 The project architecture revolves around seamless data flow, orchestrated by Docker containers and various data processing pipelines. Events originating from offline retail stores and CSV files are captured in a streaming Docker container, forwarded to a Kafka topic named "supply_chain_data," and processed through a series of pipelines for transformation and analysis.
 
