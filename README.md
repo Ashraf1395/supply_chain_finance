@@ -112,10 +112,17 @@ very easy. For any queries or debugging help check the Debug [Readme](./debug.md
 Follow these steps to execute the project seamlessly but before that whenever you start a new terminal
 run this command `source commands.sh` to create all the functions and environment variables.:
 
+### 0. Initialising Terraform and creating Resources
+```bash
+    terraform-start
+```
+This initialises terraform,gives you the overall plan and creates the resources.
+if you want to destroy the reosurces use this command `terraform-destory`.
+
 ### 1. Start Streaming Pipeline
 
 ```bash
-start_streaming_pipeline
+start-streaming-pipeline
 ```
 This command initiates the streaming pipeline, which involves the following sub-steps:
 
@@ -126,11 +133,11 @@ This command initiates the streaming pipeline, which involves the following sub-
 ### 2. Start Batch Pipeline
 
 ```bash
-start_batch_pipeline
+start-batch-pipeline
 ```
 This command kicks off the batch pipeline, consisting of the following sub-steps:
 
-- **OLAP Transformation Pipeline**: Initiates Apache Spark and executes the OLAP transformation pipeline using the command `olap_transformation_pipeline`.
+- **OLAP Transformation Pipeline**: Initiates Apache Spark and executes the OLAP transformation pipeline using the command `olap-transformation-pipeline`.
 - **GCS-to-BigQuery Pipeline**: Triggers the Mage pipeline to export data to BigQuery using the command `gcs-to-bigquery-pipeline`.
 
 ### 3. DBT Transformation

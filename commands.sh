@@ -1,5 +1,5 @@
 PROJECT_NAME='ashraf-magic'
-EXPORT_TO_BIGQUERY_PIPELINE_UUID='f0607c7c9c0241208bf779edfe0c5f9d'
+EXPORT_TO_BIGQUERY_PIPELINE_UUID='94ab2c7a2aa24bde8e148ef84c88a10f'
 # Check if the network exists; if not, create it
 if ! docker network inspect ${PROJECT_NAME}-network &>/dev/null; then
     docker network create ${PROJECT_NAME}-network
@@ -9,7 +9,7 @@ fi
 
 # Function to start streaming data
 stream-data() {
-	docker-compose -f ./docker/streaming/docker-compose.yml up
+	docker-compose -f ./docker/streaming/docker-compose.yaml up
 }
 
 # Function to start Kafka
@@ -100,7 +100,7 @@ olap-transformation-pipeline(){
 }
 
 gcs-to-bigquery-pipeline(){
-    curl -X POST http://127.0.0.1:6789/api/pipeline_schedules/2/pipeline_runs/${EXPORT_TO_BIGQUERY_PIPELINE_UUID} \
+    curl -X POST https://miniature-barnacle-qrx4qxxpg9x3rrq-6789.app.github.dev/api/pipeline_schedules/2/pipeline_runs/f0607c7c9c0241208bf779edfe0c5f9d \
   --header 'Content-Type: application/json' \
   --data '
     {
@@ -128,3 +128,11 @@ gitting(){
     git push -u origin main
 }
 
+terraform-start(){
+    terraform -chdir=terraform init
+    terraform -chdir=terraform plan
+    terraform -chdir=terraform apply
+}
+terraform-destroy(){
+    terraform -chdir=terraform destroy
+}

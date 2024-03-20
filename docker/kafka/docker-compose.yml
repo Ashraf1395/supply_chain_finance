@@ -24,20 +24,20 @@ services:
         KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
         KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 100
 
-  # schema-registry:
-  #   image: confluentinc/cp-schema-registry:7.2.0
-  #   hostname: schema-registry
-  #   container_name: ${PROJECT_NAME}-schema-registry
-  #   depends_on:
-  #     - zookeeper
-  #     - kafka
-  #   ports:
-  #     - "${SCHEMA_REGISTRY_PORT}:8081"
-  #   environment:
-  #     # SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: "zookeeper:2181" #(depreciated)
-  #     SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: ${SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS}
-  #     SCHEMA_REGISTRY_HOST_NAME: ${SCHEMA_REGISTRY_HOST_NAME}
-  #     SCHEMA_REGISTRY_LISTENERS: ${SCHEMA_REGISTRY_LISTENERS}
+  schema-registry:
+    image: confluentinc/cp-schema-registry:7.2.0
+    hostname: schema-registry
+    container_name: ${PROJECT_NAME}-schema-registry
+    depends_on:
+      - zookeeper
+      - kafka
+    ports:
+      - "${SCHEMA_REGISTRY_PORT}:8081"
+    environment:
+      # SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: "zookeeper:2181" #(depreciated)
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: ${SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS}
+      SCHEMA_REGISTRY_HOST_NAME: ${SCHEMA_REGISTRY_HOST_NAME}
+      SCHEMA_REGISTRY_LISTENERS: ${SCHEMA_REGISTRY_LISTENERS}
   
   zookeeper:
     image: confluentinc/cp-zookeeper:7.2.0
