@@ -109,6 +109,8 @@ This tech stack offers a robust foundation for building and deploying data proce
 I have created commands to run different parts of the project which makes running this project
 very easy. For any queries or debugging help check the Debug [Readme](./debug.md).
 
+Link the Tutorial Video: https://www.loom.com/share/c358150b5f864deb80e47900451b6d9c?sid=52014c06-6834-4f2a-a716-9dbf59b634c1
+
 Follow these steps to execute the project seamlessly but before that whenever you start a new terminal
 run this command `source commands.sh` to create all the functions and environment variables.:
 
@@ -156,6 +158,19 @@ With Metabase running, create insightful dashboards and reports using the transf
 ![Dasboard Example](./images/supply_chain_finance-1.png)
 
 Link to dashboard : http://opulent-space-goggles-569rq99x4p5c4rpq-3000.app.github.dev/public/dashboard/f64e91cd-4ea7-42d0-99a2-b2390463f813 (If it works)
+
+### Automating all steps:
+
+Use this command
+
+```
+start-project
+```
+
+This will run the entire project on its own.
+Things you need to take care:
+ - Updating the api endpoint for gcs-to-bigquery-pipeline(Shown in the tutorial video)
+ - Executing the kafka_to_gcs pipeline from mage ui(Show in the project)
 
 ## Deliverables
 
