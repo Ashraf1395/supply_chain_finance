@@ -115,6 +115,11 @@ Follow these steps to execute the project seamlessly but before that whenever yo
 run this command `source commands.sh` to create all the functions and environment variables.:
 
 ### 0. Initialising Terraform and creating Resources
+
+Before this create a service account in GCP and get the credentials.json key.
+Copy it in Docker/mage/ directory in place of google-cred.json
+`Keeping the name google-cred.json is necessary`.
+
 ```bash
     terraform-start
 ```
