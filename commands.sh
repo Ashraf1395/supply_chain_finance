@@ -100,7 +100,7 @@ olap-transformation-pipeline(){
 }
 
 gcs-to-bigquery-pipeline(){
-    curl -X POST http://localhost:6789/api/pipeline_schedules/2/pipeline_runs/f0607c7c9c0241208bf779edfe0c5f9d \
+    curl -X POST http://127.0.0.1:6789/api/pipeline_schedules/2/pipeline_runs/f0607c7c9c0241208bf779edfe0c5f9d \
   --header 'Content-Type: application/json' \
   --data '
     {

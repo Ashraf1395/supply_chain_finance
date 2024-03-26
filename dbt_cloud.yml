@@ -1,0 +1,14 @@
+version: "1"
+context:
+  active-host: "cloud.getdbt.com"
+  active-project: "359727"
+projects:
+  - project-name: "Analytics"
+    project-id: "359727"
+    account-name: "supply_chain_finance"
+    account-id: "252589"
+    account-host: "cloud.getdbt.com"
+    token-name: "cloud-cli-5809"
+    token-value: "dbtu_RKxhpsMbpsjkgCk12uulE5J80Ip5P7F98tCrqGyU3v45JyYPtc"
+
+
