@@ -1,5 +1,5 @@
 connector_type: google_cloud_storage
-bucket: supply-chain-data
+bucket: supply-chain-data-terraform
 prefix: raw_streaming
 file_type: parquet
 buffer_size_mb: 5

@@ -142,7 +142,7 @@ This command kicks off the batch pipeline, consisting of the following sub-steps
 
 ### 3. DBT Transformation
 
-Navigate to the DBT folder and trigger the job to start the DBT transformation.
+Run the command `dbt run` to create the gold level transformations.
 
 ### 4. Dashboard Creation
 

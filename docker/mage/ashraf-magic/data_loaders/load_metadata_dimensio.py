@@ -34,7 +34,7 @@ config = ConfigFileLoader('./ashraf-magic/io_config.yaml', 'default')
 gcs = config[ConfigKey.GOOGLE_SERVICE_ACC_KEY_FILEPATH]
 
 # Define bucket name
-bucket_name = 'supply-chain-data'
+bucket_name = 'supply-chain-data-terraform'
 
 # List all file names in the bucket
 file_names = list_files_in_gcs_bucket(bucket_name, gcs)

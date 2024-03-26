@@ -2,6 +2,19 @@
 
 DBT (Data Build Tool) is a powerful data transformation tool used to convert Silver level transformed data in BigQuery into Gold level business transformations. Through the creation of Core models derived from dimensional (dim) and fact tables, DBT enables organizations to extract valuable insights and drive informed decision-making across various business domains.
 
+## Executing in dbt-cloud cli
+
+Using python method
+- `pip3 install dbt --no-cache-dir` then
+-  Download your cloud-configuration from the dbt-cloud Project page. For Demo purposes, I have provided my dbt_project.yaml file in the `business_transformations` folder
+- Use these commands
+ - `mkdir ~/.dbt`
+ - `cp business_transformations/dbt_project.yaml ~/.dbt/` .
+- Check using `dbt compile`
+- Run the models using `dbt run command`
+- To run specific model `dbt run --select {model_name}`
+
+
 ## Lineage Graph
 ![lineage_graph](../images/dbt_lineage_graph.png)
 

@@ -100,7 +100,7 @@ olap-transformation-pipeline(){
 }
 
 gcs-to-bigquery-pipeline(){
-    curl -X POST https://miniature-barnacle-qrx4qxxpg9x3rrq-6789.app.github.dev/api/pipeline_schedules/2/pipeline_runs/f0607c7c9c0241208bf779edfe0c5f9d \
+    curl -X POST http://localhost:6789/api/pipeline_schedules/2/pipeline_runs/f0607c7c9c0241208bf779edfe0c5f9d \
   --header 'Content-Type: application/json' \
   --data '
     {
@@ -135,4 +135,35 @@ terraform-start(){
 }
 terraform-destroy(){
     terraform -chdir=terraform destroy
+}
+
+
+
+start-project(){
+    echo "Creating Resources in Bigquery..."
+    sleep 3
+    terraform-start
+    echo "Resources created, starting the streaming pipeline..."
+    start-streaming-pipeline
+    echo "Execute the mage_kafka_to_gcs pipeline from mage ui"
+    sleep 10
+    echo "Waiting 2 mins to get some data, till then update the api endpoint for batch pipeline."
+    sleep 120
+    echo "Starting Batch pipeline..."
+    start-spark
+    start-batch-pipeline
+    sleep 30
+    echo "Batch pipeline execution complete,starting dbt pipeline..."
+    dbt run
+    echo "dbt pipeline execution complete, your data is ready in Bigquery for downstream usecases."
+    echo "Start making dashboard in metabase"
+    start-metabase
+}
+
+
+stop-all-services(){
+    stop-mage
+    stop-kafka
+    stop-spark
+    stop-metabase
 }
