@@ -1,6 +1,9 @@
 {{
     config(
-        materialized='table'
+        materialized='table',
+        partition_by='order_date',  -- Partitioning by 'order_date' column
+        cluster_by='order_date'  -- Clustering by 'order_date' column
+
     )
 }}
 WITH month_names AS (
