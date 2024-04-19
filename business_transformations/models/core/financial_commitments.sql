@@ -1,6 +1,8 @@
 {{
     config(
-        materialized='table'
+        materialized='table',
+        partition_by='department_id',  -- Partitioning by 'department_id' column
+        cluster_by='department_id'
     )
 }}
 WITH order_aggregates AS (
