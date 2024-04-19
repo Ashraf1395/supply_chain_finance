@@ -1,6 +1,8 @@
 {{
     config(
-        materialized='table'
+        materialized='table',
+        partition_by='order_customer_id',  -- Partitioning by 'order_customer_id' column
+        cluster_by='order_customer_id'
     )
 }}
 
