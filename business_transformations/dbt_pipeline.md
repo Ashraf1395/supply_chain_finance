@@ -30,6 +30,8 @@ The inventory turnover ratio is computed as the ratio of sales to average invent
 ### Inventory Aging Analysis
 This analysis involves the distribution of inventory by age, allowing stakeholders to assess the aging of inventory and make informed decisions regarding stock management and liquidation.
 
+**Partitioning and Clustering**: Partitioning and clustering have been implemented on the `order_date` column to optimize performance for time-based queries and aggregations.
+
 ## Payment Delays
 [Model](./models/core/payment_delays.sql)
 
@@ -38,6 +40,8 @@ This model calculates the average payment delay for different suppliers or custo
 
 ### Distribution of Payment Delays
 By generating a histogram of payment delay periods, this model offers insights into the distribution of payment delays, helping organizations identify outliers and areas for improvement in payment processing.
+
+**Partitioning and Clustering**: Partitioning and clustering have been implemented on the `order_customer_id` column to optimize grouping and ordering operations.
 
 ## Financial Commitments
 [Model](./models/core/financial_commitments.sql)
@@ -51,6 +55,8 @@ The commitment fulfillment rate is computed as the ratio of fulfilled commitment
 ### Financial Commitments Analysis
 This analysis segments financial commitments by department, market, or product category, allowing stakeholders to understand where financial resources are allocated and identify opportunities for optimization.
 
+**Partitioning and Clustering**: Partitioning and clustering have been implemented on relevant columns to optimize performance for financial analysis and segmentation.
+
 ## Overall Performance
 [Model](./models/core/overall_performance.sql)
 
@@ -63,6 +69,8 @@ By comparing performance metrics across different regions or departments, this a
 ### Trend Analysis
 Trend analysis identifies growth opportunities or areas for improvement by analyzing historical data trends, allowing stakeholders to make data-driven decisions to drive business success.
 
+**Partitioning and Clustering**: Partitioning and clustering have been implemented on relevant columns to optimize performance for historical data analysis and comparison.
+
 ## Supply Chain Optimization/ Fraud Detection
 [Model](./models/core/fraud_detection.sql)
 
@@ -74,5 +82,7 @@ By analyzing order fulfillment cycle times, this model identifies bottlenecks in
 
 ### Bottleneck Identification
 Identifying bottlenecks in the supply chain process enables organizations to implement targeted interventions to improve throughput and enhance overall supply chain performance.
+
+**Partitioning and Clustering**: Partitioning and clustering have been implemented on relevant columns to optimize performance for supply chain analysis and bottleneck identification.
 
 DBT Business Transformation Models empower organizations to unlock the full potential of their data by transforming raw information into actionable insights and strategic initiatives. With a focus on key business domains such as inventory management, financial analysis, performance monitoring, and supply chain optimization, these models drive efficiency, innovation, and growth across the organization.
